@@ -32,17 +32,10 @@ public class ActivityTests {
     }
 
   @Test
-    public void testSplashActivityShouldHaveLogo() {
+    public void testStartupActivityInitialiseMsg() {
       TextView Msg2 = (TextView) mActivity.findViewById(R.id.txtMsg2);
       assertEquals(" Initializing, Please Wait ",Msg2.getText().toString());
     }
-/*
-    @Test
-    public void testClickingClickMeButtonChangesHelloWorldText() {
-        assertThat(mActivity.my_hello_text_view).hasText(R.string.hello_world);
-        mActivity.mClickMeBtn.performClick();
-        assertThat(mActivity.my_hello_text_view).hasText(R.string.ok_thanks);
-    }
-*/
+
 
 }

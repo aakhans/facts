@@ -21,13 +21,13 @@ public abstract class AbstractActivity extends Activity implements DetachableRes
     @Override
     protected void onStart() {
         super.onStart();
-        Log.d(TAG,"LOG on start absactivity");
+
      }
 
     @Override
     public void onStop() {
         super.onStop();
-        Log.d(TAG,"LOG on stop absactivity");
+
      }
 
     @Override
@@ -51,13 +51,13 @@ public abstract class AbstractActivity extends Activity implements DetachableRes
 
     public void onPause() {
         super.onPause();
-        Log.d(TAG,"LOG on pause absactivity");
+
         mReceiver.setReceiver(null); // clear receiver so no leaks.
     }
 
     public void onResume() {
         super.onResume();
-        Log.d(TAG,"LOG on resume absactivity");
+
         mReceiver.setReceiver(this);
     }
 

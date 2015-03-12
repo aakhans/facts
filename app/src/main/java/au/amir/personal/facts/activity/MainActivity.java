@@ -70,8 +70,9 @@ public class MainActivity extends AbstractFragmentActivity {
         }
         else if (id==R.id.action_refresh)
         {
+            Toast.makeText(getApplicationContext(),"Contacting Server, To Fetch Data again ...",Toast.LENGTH_LONG).show();
             AbstractFragment currentFragment = (AbstractFragment)getSupportFragmentManager().findFragmentById(R.id.container);
-            currentFragment.performRefresh();
+            currentFragment.performRefresh();  // call perform refresh on active fragment
         }
 
         return super.onOptionsItemSelected(item);

@@ -80,6 +80,7 @@ public class StartupFragment extends AbstractFragment    {
         switch (resultCode) {
             case APIService.STATUS_ERROR:
                 txtMsg2.setText("Unable To Contact Server, Please Refresh ...");
+                txtMsg1.setText("Please Check Internet Connectivity ...");
                 break;
             case APIService.STATUS_FINISHED:
                 // means data fetched success

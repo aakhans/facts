@@ -26,6 +26,7 @@ public class SplashScreenActivity extends AbstractFragmentActivity {
 
         setContentView(R.layout.splash_screen);
 
+
             new Handler().postDelayed(new Runnable() {
 
                 public void run() {
@@ -46,20 +47,20 @@ public class SplashScreenActivity extends AbstractFragmentActivity {
     @Override
     public void onStart() {
         super.onStart();
-        Log.d(TAG, "LOG on start splash");
+
     }
 
 
     @Override
     protected void onPause() {
         super.onPause();
-        Log.d(TAG, "LOG on pause splash");
+
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        Log.d(TAG, "LOG on stop splash");
+
     }
 
 

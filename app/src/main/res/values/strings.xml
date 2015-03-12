@@ -8,7 +8,7 @@
     <string name="action_logout">Logout</string>
     <string name="action_refresh">Refresh</string>
     <string name="section_no">section_number</string>
-
+    <string name="FailureMessage">Unable to fetch Data from server</string>
 
 
     <string name="EndPointURL">https://dl.dropboxusercontent.com/u/746330/facts.json</string>

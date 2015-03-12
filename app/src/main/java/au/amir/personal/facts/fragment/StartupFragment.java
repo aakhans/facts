@@ -11,7 +11,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import org.w3c.dom.Text;
 
 import au.amir.personal.facts.R;
 import au.amir.personal.facts.activity.AbstractFragment;
@@ -24,11 +27,11 @@ import au.amir.personal.facts.service.enums.WebCommandEnums;
 /**
  * Created by amir on 2/6/2015.
  */
-public class HomeFragment extends AbstractFragment    {
+public class StartupFragment extends AbstractFragment    {
 
-    EditText  SearchQuery =null;
-    RecyclerView recyclerView;
-    FactsAdapter factsAdapter;
+    TextView  txtMsg1;
+    TextView  txtMsg2;
+
     private static final String TAG = HomeFragment.class.getName();
 
     @Override
@@ -38,22 +41,17 @@ public class HomeFragment extends AbstractFragment    {
 
     @Override
     protected int getViewFragmentId() {
-        return R.layout.home_fragment;
+        return R.layout.startup_fragment;
     }
 
     @Override
-     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = super.onCreateView(inflater, container, savedInstanceState);
-        recyclerView = (RecyclerView) view.findViewById(R.id.facts_rc_view);
-        factsAdapter = new FactsAdapter(getActivity() );
-
-        recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
-
-        recyclerView.setAdapter(factsAdapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        txtMsg1 = (TextView) view.findViewById(R.id.txtMsg1);
+        txtMsg2 = (TextView) view.findViewById(R.id.txtMsg2);
+        performRefresh(); // start intent service
         return view;
     }
-
 
 
     @Override
@@ -61,39 +59,33 @@ public class HomeFragment extends AbstractFragment    {
         super.onCreate(savedInstanceState);
     }
 
-
-
     @Override
     public void onStart() {
         super.onStart();
-
     }
 
 
     @Override
     public void onPause() {
         super.onPause();
-
     }
 
     @Override
     public void onStop() {
         super.onStop();
-
     }
 
     @Override
     public boolean onReceiveResult(int resultCode, Bundle resultData) {
         switch (resultCode) {
-            case APIService.STATUS_RUNNING:
-                //showProgressDialog(WebCommandEnums.GET_CATALOUGE.name()); // progress dialog can be displayed here
+            case APIService.STATUS_ERROR:
+                txtMsg2.setText("Unable To Contact Server, Please Refresh ...");
                 break;
             case APIService.STATUS_FINISHED:
                 // means data fetched success
-               // dismissProgressDialog();  // close the dialog
                 ActionBar actionBar = ((ActionBarActivity)getActivity()).getSupportActionBar();
-                actionBar.setTitle(MyService.getInstance().getFactsSheet().getTitle());
-                factsAdapter.notifyDataSetChanged();
+                actionBar.setTitle(MyService.getInstance().getFactsSheet().getTitle());  // change Actionbar title as required
+                navigateTo(new HomeFragment()); // display the RecyclerView now
                 break;
         }
         return true;

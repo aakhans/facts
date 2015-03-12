@@ -8,6 +8,7 @@ import android.util.Log;
 
 import java.util.List;
 
+import au.amir.personal.facts.R;
 import au.amir.personal.facts.model.FactsSheet;
 import au.amir.personal.facts.service.enums.IntentEnums;
 import au.amir.personal.facts.service.enums.WebCommandEnums;
@@ -34,7 +35,7 @@ public class APIService extends IntentService{
 		
 		Log.d(TAG, "onHandledIntent Called....");
 		
-		//final ResultReceiver receiver = intent.getParcelableExtra(IntentEnums.RECEIVER.name());
+		final ResultReceiver receiver = intent.getParcelableExtra(IntentEnums.RECEIVER.name());
 		Bundle bundle = new Bundle();
 		WebCommandEnums command = (WebCommandEnums) intent.getSerializableExtra(IntentEnums.COMMAND.name());
 		bundle.putSerializable(IntentEnums.COMMAND.name(), command);
@@ -50,12 +51,11 @@ public class APIService extends IntentService{
 			this.stopSelf();
 			return;
 		}
-		 */
+		*/
 
 		Log.d(TAG, "Recieved intent for - " + command);
 
-
-		//receiver.send(STATUS_RUNNING, bundle);
+		receiver.send(STATUS_RUNNING, bundle);
 		try {
 
 			switch (command) {
@@ -63,9 +63,11 @@ public class APIService extends IntentService{
 
 				Log.d(TAG, "Processing GET_DATA" );
 				// this will throw an exception if problem occur while fetching data
-				MyService.getInstance().prepareData(intent.getStringExtra(IntentEnums.WSURL.name()));
+				boolean Success = MyService.getInstance().prepareData(intent.getStringExtra(IntentEnums.WSURL.name()));
+                if (!Success)
+                    throw new Exception(getResources().getString(R.string.FailureMessage));
 
-				//receiver.send(STATUS_FINISHED, bundle);  // update the relevant activity/fragment
+				receiver.send(STATUS_FINISHED, bundle);  // update the relevant activity/fragment
                 Log.d(TAG, "Processing GET_DATA successfull"  );
                 FactsSheet facts  = MyService.getInstance().getFactsSheet();
                 Log.d(TAG, "Title is " + facts.getTitle()  );
@@ -75,7 +77,7 @@ public class APIService extends IntentService{
 		} catch (Exception e) {
 			Log.d(TAG, e.getMessage(), e);
 			bundle.putString(Intent.EXTRA_TEXT, e.toString());
-			//receiver.send(STATUS_ERROR, bundle);
+			receiver.send(STATUS_ERROR, bundle);
 		}
 
 		this.stopSelf();  // service ends

@@ -49,14 +49,13 @@ public class MyService  implements Serializable {
 		return instance;
 	}
 
-    public boolean prepareData(String EndPointURL) throws Exception
+    public boolean prepareData(String EndPointURL)
     {
         Gson gson = new Gson();
 
         String Data = fetchFactsData(EndPointURL);
 
         if (Data==null) return false;
-          //throw new Exception("Unable to Fetch Data");
 
         FactsSheet factsSheet = gson.fromJson(Data, FactsSheet.class);
         MyService.getInstance();

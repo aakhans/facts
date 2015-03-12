@@ -8,10 +8,13 @@ import android.support.v7.app.ActionBar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import au.amir.personal.facts.R;
 import au.amir.personal.facts.fragment.HomeFragment;
+import au.amir.personal.facts.fragment.StartupFragment;
 import au.amir.personal.facts.service.APIService;
+import au.amir.personal.facts.service.MyService;
 import au.amir.personal.facts.service.enums.IntentEnums;
 import au.amir.personal.facts.service.enums.WebCommandEnums;
 
@@ -26,64 +29,22 @@ public class MainActivity extends AbstractFragmentActivity {
         setContentView(R.layout.activity_main);
 
         ActionBar bar = getSupportActionBar();
-        bar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#009688")));
+        bar.setBackgroundDrawable(new ColorDrawable(R.color.BarColor));
 
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, new HomeFragment())
+                    .add(R.id.container, new StartupFragment())
                     .commit();
         }
-
-        Intent intent = new Intent(this, APIService.class);
-        intent.putExtra(IntentEnums.WSURL.name(), getResources().getString(R.string.EndPointURL));
-        intent.putExtra(IntentEnums.COMMAND.name(), WebCommandEnums.GET_DATA);
-       // intent.putExtra(IntentEnums.RECEIVER.name(), mReceiver);
-        startService(intent);
-        Log.d(TAG, " Service Launched... ");
-
     }
 
-   /* @Override
-    public void onNavigationDrawerItemSelected(int position) {
-
-
-        switch(position){
-            case 0:
-                    navigateTo(new HomeFragment(), position);
-
-                    break;
-             case 1:
-                if (!isConnected())
-                    {
-                    Toast toast = Toast.makeText( getApplicationContext(),"Please check your internet settings and try again", Toast.LENGTH_LONG);
-                    toast.setGravity(Gravity.CENTER, 0, 0);
-                    toast.show();
-                    return;
-                    }
-                 navigateTo(new CatalogueFragment(),position);
-                    break;
-            case 2:
-                if (!isConnected())
-                {
-                    Toast toast = Toast.makeText( getApplicationContext(),"Please check your internet settings and try again", Toast.LENGTH_LONG);
-                    toast.setGravity(Gravity.CENTER, 0, 0);
-                    toast.show();
-                    return;
-                }
-
-                navigateTo(new MapsFragment(), position);
-                break;
-        }
-
-    }*/
 
 
     public void restoreActionBar() {
 
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
         actionBar.setDisplayShowTitleEnabled(true);
-        actionBar.setTitle(getResources().getString(R.string.app_name));
+
     }
 
 
@@ -103,8 +64,14 @@ public class MainActivity extends AbstractFragmentActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_logout) {
             finish();
+
+        }
+        else if (id==R.id.action_refresh)
+        {
+            AbstractFragment currentFragment = (AbstractFragment)getSupportFragmentManager().findFragmentById(R.id.container);
+            currentFragment.performRefresh();
         }
 
         return super.onOptionsItemSelected(item);

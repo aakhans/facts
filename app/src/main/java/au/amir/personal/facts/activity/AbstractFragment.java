@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -14,8 +15,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import au.amir.personal.facts.R;
+import au.amir.personal.facts.service.APIService;
 import au.amir.personal.facts.service.DetachableResultReceiver;
+import au.amir.personal.facts.service.enums.IntentEnums;
+import au.amir.personal.facts.service.enums.WebCommandEnums;
 
 
 public abstract class AbstractFragment extends Fragment implements DetachableResultReceiver.Receiver {
@@ -26,16 +32,11 @@ public abstract class AbstractFragment extends Fragment implements DetachableRes
 
     protected abstract int getViewFragmentId();
 
-    public void refreshModel() {
-    }
-
-    public void refreshModel(boolean refreshPhone) {
-    }
 
     public void refreshViewFromModel() {
     }
 
-    protected DetachableResultReceiver mReceiver;
+    protected DetachableResultReceiver mReceiver;  // for receiving broadcast msgs
     private ProgressDialog progressDialog;
 
     private boolean destroyed = false;
@@ -76,7 +77,7 @@ public abstract class AbstractFragment extends Fragment implements DetachableRes
 
     public void onPause() {
         super.onPause();
-        Log.d(TAG,"LOG on pause absfrag");
+
         mReceiver.setReceiver(null); // clear receiver so no leaks.
         if (progressDialog != null) {
             progressDialog.dismiss();
@@ -85,7 +86,7 @@ public abstract class AbstractFragment extends Fragment implements DetachableRes
 
     public void onResume() {
         super.onResume();
-        Log.d(TAG,"LOG on resume absfrag");
+
         mReceiver.setReceiver(this);
     }
 
@@ -119,13 +120,15 @@ public abstract class AbstractFragment extends Fragment implements DetachableRes
         return false;
     }
 
-    protected boolean handleStatusFinished() {
-        switch (1) {
-         default:
-                return true;
-        }
-    }
 
+    public void performRefresh()
+    {
+        Intent intent = new Intent(getActivity(), APIService.class);
+        intent.putExtra(IntentEnums.WSURL.name(), getResources().getString(R.string.EndPointURL));
+        intent.putExtra(IntentEnums.COMMAND.name(), WebCommandEnums.GET_DATA);
+        intent.putExtra(IntentEnums.RECEIVER.name(), this.mReceiver);
+        getActivity().startService(intent);
+    }
 
     protected void showAlertDialog(String title, String message) {
         showAlertDialog(title, message, true);

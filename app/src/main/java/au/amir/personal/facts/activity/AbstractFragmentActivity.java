@@ -24,14 +24,14 @@ public abstract class AbstractFragmentActivity extends ActionBarActivity {
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-        Log.d(TAG, "LOG onSaveInstanceState called");
+
         outState.putBoolean("pendingBackToRootFragment", pendingBackToRootFragment);
         super.onSaveInstanceState(outState);
     }
 
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        Log.d(TAG, "LOG onRestoreInstanceState called");
+
         pendingBackToRootFragment = savedInstanceState.getBoolean("pendingBackToRootFragment");
         super.onRestoreInstanceState(savedInstanceState);
     }
@@ -49,20 +49,19 @@ public abstract class AbstractFragmentActivity extends ActionBarActivity {
     @Override
     public void onStart() {
         super.onStart();
-        Log.d(TAG,"LOG on start absfragactivity");
+
     }
 
         @Override
     public void onStop() {
         super.onStop();
-        Log.d(TAG,"LOG on stop absfragactivity");
+
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        Log.d(TAG,"LOG on resume absfragactivity");
-        Log.d(TAG, "Should pop back? " + pendingBackToRootFragment);
+
         if (pendingBackToRootFragment) {
             // popToRoot();
         }
@@ -71,11 +70,11 @@ public abstract class AbstractFragmentActivity extends ActionBarActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        Log.d(TAG,"LOG on pause absfragactivity");
+
     }
 
     public void popToRoot() {
-        Log.d(TAG,"LOG on poptoROOT absfragactivity");
+
         final FragmentManager manager = getSupportFragmentManager();
         if (manager.getBackStackEntryCount() == 0) return;
         int rootFragment = manager.getBackStackEntryAt(0).getId();
@@ -118,9 +117,9 @@ public abstract class AbstractFragmentActivity extends ActionBarActivity {
             // If there are back-stack entries, leave the FragmentActivity
             // implementation take care of them.
             super.onBackPressed();
-            Log.d(TAG,"LOG on onBackPressed 1 absfragactivity");
+
         } else {
-            Log.d(TAG,"LOG on onBackPressed 2 absfragactivity");
+
 
           finish();
         }

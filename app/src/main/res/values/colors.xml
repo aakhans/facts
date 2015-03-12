@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+
+    <color name="FONT_TITLE_COLOR">#e65014</color>
+    <color name="FONT_ERROR_COLOR">#FF0000</color>
+    <color name="FONT_TEXT_COLOR">#636466</color>
+    <color name="BLUE_COLOR">#3366bb</color>
+    <color name="ROW_SELECTED_COLOR">#3abcff</color>
+    <color name="barcolor">#009688</color>
+
+    <color name="yellow1">#FFFF99</color>
+    <color name="yellow2">#FFCC00</color>
+    <color name="orange1">#FF9966</color>
+    <color name="orange2">#FF6600</color>
+    <color name="orange4">#FF9966</color>
+    <color name="orange5">#FF6600</color>
+    <color name="blue1">#99CCFF</color>
+    <color name="blue2">#0033CC</color>
+    <color name="blue25">#0033CC</color>
+    <color name="grey">#736F6E</color>
+    <color name="grey05">#736F6E</color>
+    <color name="white">#ffffff</color>
+    <color name="black">#000000</color>
+    <color name="blue">#00f</color>
+    <color name="red">#f00</color>
+    <color name="transparent">#00000000</color>
+
+    <color name="blackSelectedTab">#3c3c3c</color>
+    <color name="blackTab">#242625</color>
+
+
+    <color name="toolbar_top">#ff7d88a5</color>
+    <color name="toolbar_bottom">#ff3a4e78</color>
+    <color name="highlight_top">#ffffc600</color>
+    <color name="highlight_bottom">#ffcf9600</color>
+    <color name="toolbar_fg">#ffffffff</color>
+
+
+    <color name="background">#55000000</color>
+
+</resources>
